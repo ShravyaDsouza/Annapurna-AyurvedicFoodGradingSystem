@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredient Grading</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e453e,darkgreen);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Styling for the category buttons */
+        .category-button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: 1px solid #28a745; /* Green border */
+            background-color: #fff;
+            color: #28a745; /* Green text */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        /* Styling for selected category buttons */
+        .category-button.selected {
+            background-color: #28a745; /* Green background for selected */
+            color: #fff;
+        }
+        /* General button styling */
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Common Container Styling */
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #28a745; /* Green border */
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center the text inside the container */
+        }
+
+        /* Title Styling */
+        .container h2 {
+            text-align: center;
+            color: #28a745; /* Green text */
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the result content */
+        .result-content {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .ingredient-section {
+            margin-bottom: 20px;
+        }
+
+        .ingredient-section h3 {
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .alternative {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            transition: background-color 0.3s;
+        }
+
+        .alternative:hover {
+            background-color: #f1f1f1;
+        }
+
+        .alternative .restricted {
+            color: #dc3545; /* Red color for restricted */
+        }
+
+        .alternative .preferred {
+            color: #28a745; /* Green color for preferred */
+        }
+
+        /* Final Grade Styling */
+        .final-grade {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #ffc107; /* Yellow color for grade */
+            margin-top: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .common-container {
+                width: 90%;
+            }
+
+            .common-container h2 {
+                font-size: 24px;
+            }
+
+            .ingredient-section h3 {
+                font-size: 18px;
+            }
+
+            .final-grade {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Start Page -->
+        <div id="startPage">
+            <h1>Ingredient Grading</h1>
+            <button onclick="goToNextPage('categoryPage')">Start</button>
+        </div>
+
+        <form action=/submit_ingredient_grade method="POST">
+            <!-- Category Selection Page -->
+            <div id="categoryPage" style="display: none;">
+                <h2>Select Categories:</h2>
+                <div id="categoryButtonsContainer">
+                    {% for category in categories %}
+                        <button type="button" class="category-button" onclick="toggleCategory('{{ category }}')">{{ category }}</button>
+                    {% endfor %}
+                </div>
+                <button type="button" onclick="submitCategories()">Next</button>
+            </div>
+
+            <!-- Ingredient Input Page -->
+            <div id="ingredientPage" style="display: none;">
+                <h2>Enter Ingredients for Selected Categories:</h2>
+                <div id="ingredientForm"></div>
+                <button type="button" onclick="goToNextPage('doshaPage')">Next</button>
+            </div>
+
+            <!-- Dosha Selection Page -->
+            <div id="doshaPage" style="display: none;">
+                <h2>Select Dosha:</h2>
+                <select name="dosha" id="doshaSelect" required>
+                    <option value="">-- Select Dosha --</option>
+                    <option value="Vatta">Vatta</option>
+                    <option value="Pitta">Pitta</option>
+                    <option value="Kapha">Kapha</option>
+                </select><br><br>
+                <button type="button" onclick="submitDosha()">Submit</button>
+            </div>
+
+            <!-- Result Page -->
+            <div id="resultPage" style="display: none;">
+                <h2>Results:</h2>
+                <div id="resultContent">{{ result|safe }}</div>
+            </div>
+        </form>
+    </div>
+<script>
+  // Store selected categories globally
+let selectedCategories = [];
+
+// Function to navigate to a specific page
+function goToNextPage(pageId) {
+    // Hide all pages
+    const pages = ['startPage', 'categoryPage', 'ingredientPage', 'doshaPage', 'resultPage'];
+    pages.forEach(page => {
+        // Ensure the page exists before hiding it
+        const pageElement = document.getElementById(page);
+        if (pageElement) {
+            pageElement.style.display = 'none';
+        } else {
+            console.error(`Page with ID '${page}' not found.`);
+        }
+    });
+
+    // Show the specified page
+    const nextPageElement = document.getElementById(pageId);
+    if (nextPageElement) {
+        nextPageElement.style.display = 'block';
+    } else {
+        console.error(`Page with ID '${pageId}' not found.`);
+    }
+}
+
+// Function to toggle category selection
+function toggleCategory(category) {
+    const categoryButton = document.querySelector(`button[onclick="toggleCategory('${category}')"]`);
+    if (selectedCategories.includes(category)) {
+        // If category is already selected, remove it from the list
+        selectedCategories = selectedCategories.filter(item => item !== category);
+        categoryButton.classList.remove('selected');
+    } else {
+        // If category is not selected, add it to the list
+        selectedCategories.push(category);
+        categoryButton.classList.add('selected');
+    }
+    console.log("Selected categories:", selectedCategories); // Debugging selected categories
+}
+
+// Function to handle category submission and move to ingredient input page
+function submitCategories() {
+    // Check if at least one category is selected
+    if (selectedCategories.length === 0) {
+        alert("Please select at least one category.");
+        return;
+    }
+
+    // Dynamically create ingredient fields for the selected categories
+    const ingredientForm = document.getElementById('ingredientForm');
+    ingredientForm.innerHTML = ''; // Clear any existing fields
+    selectedCategories.forEach(category => {
+        ingredientForm.innerHTML += `
+            <label for="${category}">${category}: </label>
+            <input type="text" name="${category}_ingredient" id="${category}" placeholder="Enter ingredient for ${category}" required><br><br>
+        `;
+    });
+
+    // Move to the next page
+    goToNextPage('ingredientPage');
+}
+
+// Function to handle dosha selection submission and data submission to Flask
+// Function to handle dosha selection submission and data submission to Flask
+function submitDosha() {
+    // Create a new FormData object
+    const formData = new FormData();
+
+    // Ensure selectedCategories is not empty before proceeding
+    if (selectedCategories.length === 0) {
+        alert("No categories were selected. Please go back and select categories.");
+        return;
+    }
+
+    // Append selected categories as a single comma-separated string
+    formData.append('categories', selectedCategories.join(','));
+
+    // Append each ingredient for the selected categories with a unique key
+    let hasEmptyIngredient = false; // Flag to track empty ingredients
+    selectedCategories.forEach(category => {
+        const ingredient = document.getElementById(category).value.trim();
+        if (ingredient === "") {
+            alert(`Please enter an ingredient for ${category}.`);
+            hasEmptyIngredient = true;
+        }
+        formData.append(`${category}_ingredient`, ingredient);  // Use a unique key for each ingredient
+    });
+
+    // Stop submission if any ingredient is empty
+    if (hasEmptyIngredient) return;
+
+    // Append dosha selection
+    const dosha = document.getElementById('doshaSelect').value;
+    if (dosha === "") {
+        alert("Please select a dosha.");
+        return;
+    }
+    formData.append('dosha', dosha);
+
+    // Submit the data to Flask backend
+    fetch('/submit_ingredient_grade', {
+        method: 'POST',
+        body: formData
+    }).then(response => {
+        // Redirect to the dashboard after successful submission
+        if (response.ok) {
+            window.location.href = "/dashboard";
+        } else {
+            alert("An error occurred while processing the request. Please try again.");
+        }
+    }).catch(error => {
+        alert("An error occurred while processing the request. Please try again.");
+        console.error("Error:", error);
+    });
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurvedic Report - Custom Green Theme</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --background-color1: #1e453e;    /* Green */
+            --background-color2: #ebe6e4;    /* White */
+            --background-color3: #c3d0cb;    /* Light shade of green */
+            --background-color4: #9ab6ad;    /* Another greenish shade */
+            --primary-color: #1e453e;        /* Green */
+            --secondary-color: #0a332b;      /* Dark green */
+            --border-color: #0a332b;         /* Dark green */
+            --one-use-color: #0a332b;        /* Dark green */
+            --two-use-color: #154d44;        /* Slightly different dark green */
+        }
+
+        body {
+            background-color: var(--background-color2); /* Light background */
+            color: var(--one-use-color); /* Dark green text */
+        }
+        .report-header {
+            background-color: var(--primary-color); /* Dark green */
+            color: #fff;
+            padding: 20px;
+            border-bottom: 3px solid var(--border-color); /* Dark border */
+            margin-bottom: 20px;
+        }
+        .section-title {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--primary-color); /* Green */
+        }
+        .category-block {
+            margin-bottom: 20px;
+            background-color: var(--background-color3); /* Light green */
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color); /* Green border */
+        }
+        .category-title {
+            font-weight: bold;
+            color: var(--two-use-color); /* Slightly different dark green */
+        }
+        .item-details {
+            margin-left: 15px;
+            color: var(--one-use-color); /* Dark green */
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+        #doshaChart, #scoreChart {
+            width: 300px;
+            height: 300px;
+        }
+        /* Center percentage inside circular chart */
+        .score-percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--primary-color); /* Green */
+        }
+        .chart-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        /* Chart title in dark green */
+        .chart-title {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Report Header -->
+    <div class="report-header text-center">
+        <h1>Ayurvedic Health Report</h1>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-container">
+        <div>
+            <h4 class="chart-title">Dominant Dosha Distribution</h4>
+            <canvas id="doshaChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <h4 class="chart-title">Ayurvedic Score</h4>
+            <canvas id="scoreChart"></canvas>
+            <div class="score-percentage" id="scoreText">81%</div>  <!-- Placeholder for dynamic score -->
+        </div>
+    </div>
+
+
+<div class="mt-5">
+    <h4 class="section-title">Ayurvedic Data for {{ dosha }}</h4>
+
+    {% for category, results in category_results.items() %}
+        <div class="category-block">
+            <p class="category-title">Category: {{ category }}</p>
+            {% for result in results %}
+                <div class="item-details">
+                    <p><strong>Ingredient:</strong> {{ result.ingredient }}</p>
+                    <p><strong>Suitability:</strong> {{ result.suitability }}</p>
+                    {% if result.preferred_form %}
+                        <p><strong>Preferred Form:</strong> {{ result.preferred_form }}</p>
+                    {% endif %}
+                    <p><strong>Restricted Form:</strong> {{ result.restricted_form }}</p>
+                    {% if result.alternatives != "None" %}
+                        <p><strong>Alternatives:</strong> {{ result.alternatives }}</p>
+                    {% endif %}
+                </div>
+                <hr class="my-3"> <!-- Separator for better readability between ingredients -->
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+  <!-- Grade Display Block -->
+    <div class="category-block">
+        <p class="category-title">Your Dosha Suitability Grade</p>
+        <div class="item-details" style="position:relative;right:10px;">
+            <p><strong>Grade:</strong> {{ grade }} / 5</p>
+        </div>
+    </div>
+</div>
+</div>
+
+    <script>
+    // Dosha Chart - Pie Chart with the actual counts from the user's dosha_counts
+    const doshaCtx = document.getElementById('doshaChart').getContext('2d');
+    const doshaData = {
+        Vata: {{ dosha_counts['Vata'] }},
+        Pitta: {{ dosha_counts['Pitta'] }},
+        Kapha: {{ dosha_counts['Kapha'] }}
+    };
+    const doshaChart = new Chart(doshaCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Vata', 'Pitta', 'Kapha'],
+            datasets: [{
+                data: [doshaData.Vata, doshaData.Pitta, doshaData.Kapha],
+                backgroundColor: ['#3D6B41', '#006241', '#21421e'],  // New colors for Vata, Pitta, Kapha
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    // Ayurvedic Score Circular Progress Bar
+    const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+    const grade = {{ grade }};  // Use the dynamic grade value from Flask
+    const score = (grade / 5) * 100;  // Convert the grade to a percentage for the chart
+
+    const scoreChart = new Chart(scoreCtx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [score, 100 - score],
+                backgroundColor: ['#1e453e', '#ebe6e4'],  // Vibrant green and light shade
+                borderWidth: 0,
+                cutout: '80%',  // This creates the "donut hole" effect
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // Dynamically Update the Percentage Text
+    document.getElementById('scoreText').textContent = Math.round(score) + '%';
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

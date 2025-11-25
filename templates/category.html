@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<title>Annapurna Blog</title>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,700" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet"/>
+</head>
+<body>
+<nav class="topnav navbar navbar-expand-lg navbar-light bg-white fixed-top">
+<div class="container">
+	<a class="navbar-brand" href="{{ url_for('index') }}"><strong>Annapurna</strong></a>
+	<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="navbar-collapse collapse" id="navbarColor02" style="">
+		<ul class="navbar-nav mr-auto d-flex align-items-center">
+			<li class="nav-item">
+			<a class="nav-link" href="{{ url_for('mindfulness') }}">Mindfulness</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="{{ url_for('mindfulness') }}">Remedies</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="{{ url_for('mindfulness') }}">Selfcare</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="{{ url_for('mindfulness') }}">Recipes</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="{{ url_for('mindfulness') }}">Yoga</a>
+			</li>
+		</ul>
+	</div>
+</div>
+</nav>
+
+<div class="container mt-5 mb-5">
+	<div class="row">
+		<div class="col-md-8">
+			<h5 class="font-weight-bold spanborder"><span>Featured in Mindfulness</span></h5>
+			<div class="card border-0 mb-5 box-shadow">
+				<div style="background-image: url('/static/assets/img/1.png'); height: 600px; background-size: cover; background-repeat: no-repeat;">
+				</div>
+				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+					<h2 class="h2 font-weight-bold">
+					<a class="text-dark" href="./article.html">Ayurveda 101: The Essence of Holistic Wellness</a>
+					</h2>
+					<p class="card-text">
+						Discover how Ayurveda brings balance to mind, body, and spirit through personalized food choices.
+					</p>
+					<div>
+						<small class="text-muted">Dec 12 · 5 min read</small>
+					</div>
+				</div>
+			</div>
+			<h5 class="font-weight-bold spanborder"><span>Latest</span></h5>
+			<div class="mb-3 d-flex justify-content-between">
+				<div class="pr-3">
+					<h2 class="mb-1 h4 font-weight-bold">
+					<a class="text-dark" href="{{ url_for('articles') }}">The Art of Mindfulness: Cultivating Presence in a Busy World</a>
+					</h2>
+					<p>
+						Learn how to practice mindfulness and embrace the present moment, transforming your daily experiences.
+					</p>
+					<small class="text-muted">Dec 12 · 5 min read</small>
+				</div>
+				<img height="120" src="{{ url_for('static', filename='assets/img/5.png') }}">
+			</div>
+			<div class="mb-3 d-flex justify-content-between">
+				<div class="pr-3">
+					<h2 class="mb-1 h4 font-weight-bold">
+					<a class="text-dark" href="{{ url_for('articles') }}">Grounding with Kapha: Finding Stability in Chaos</a>
+					</h2>
+					<p>
+						Explore how Kapha contributes to your sense of stability and resilience, and uncover techniques to ground yourself through mindful living.
+					</p>
+					<small class="text-muted">Dec 12 · 5 min read</small>
+				</div>
+				<img height="120" src="{{ url_for('static', filename='assets/img/7.png') }}">
+			</div>
+			<div class="mb-3 d-flex justify-content-between">
+				<div class="pr-3">
+					<h2 class="mb-1 h4 font-weight-bold">
+					<a class="text-dark" href="{{ url_for('articles') }}">Mindful Breathing: A Path to Inner Calm</a>
+					</h2>
+					<p>
+						Discover simple breathing techniques to center your thoughts and reduce stress in everyday life.
+					</p>
+					<small class="text-muted">Dec 12 · 5 min read</small>
+				</div>
+				<img height="120" src="{{ url_for('static', filename='assets/img/6.png') }}">
+			</div>
+		</div>
+		<div class="col-md-4 pl-4">
+			<div class="sticky-top">
+				<h5 class="font-weight-bold spanborder"><span>Popular in Mindfulness</span></h5>
+				<ol class="list-featured">
+					<li>
+					<span>
+					<h6 class="font-weight-bold">
+					<a href="{{ url_for('articles') }}" class="text-dark">Find out how Kapha influences stability and structure, and explore ways to stay light and energized.</a>
+					</h6>
+					</span>
+					</li>
+					<li>
+					<span>
+					<h6 class="font-weight-bold">
+					<a href="{{ url_for('articles') }}" class="text-dark">Understand Pitta’s role in digestion, metabolism, and energy, and discover practical tips to keep your inner fire in check.</a>
+					</h6>
+					</span>
+					</li>
+					<li>
+					<span>
+					<h6 class="font-weight-bold">
+					<a href="{{ url_for('articles') }}" class="text-dark">Learn how Vata governs movement and how to maintain balance with the right food and lifestyle choices.</a>
+					</h6>
+					</span>
+					</li>
+					<li>
+					<span>
+					<h6 class="font-weight-bold">
+					<a href="{{ url_for('articles') }}" class="text-dark">The Role of Doshas: Shaping Your Ayurvedic Journey</a>
+					</h6>
+					</span>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
+    
+<div class="container pt-4 pb-4">
+	<div class="border p-5 bg-lightblue">
+		<div class="row justify-content-between">
+			<div class="col-md-6">
+				<h5 class="font-weight-bold secondfont">Become a member</h5>
+				 Get the latest news right in your inbox. It's free and you can unsubscribe at any time. We hate spam as much as we do, so we never spam!
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-6">
+						<input type="text" class="form-control" placeholder="First name">
+					</div>
+					<div class="col-md-6">
+						<input type="text" class="form-control" placeholder="Last name">
+					</div>
+					<div class="col-md-12 mt-3">
+						<button type="submit" class="btn btn-success btn-block">Subscribe</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container mt-5">
+	<footer class="bg-white border-top p-3 text-muted small">
+	<div class="row align-items-center justify-content-between">
+		<div>
+			<span class="navbar-brand mr-2"><strong>Annapurna</strong></span> Copyright &copy;
+			<script>document.write(new Date().getFullYear())</script>
+			 . All rights reserved.
+		</div>
+	</div>
+	</footer>
+</div>
+<script src="{{ url_for('static', filename='assets/js/vendor/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='assets/js/vendor/popper.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='assets/js/vendor/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='assets/js/vendor/functions.js') }}" type="text/javascript"></script>
+</body>
+</html>

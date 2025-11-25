@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Your Dosha Quiz</title>
+    <link rel="stylesheet" href="../static/stylesheet.css">
+</head>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e453e,darkgreen);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Center the quiz container */
+.quiz-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.question h3 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Style for unselected labels */
+label {
+    font-size: 1em;
+    color: #444;
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Highlight the selected label */
+label.selected {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+}
+
+label:hover {
+    background-color: #e3f2fd;
+}
+
+
+/* Buttons styling */
+button {
+    padding: 10px 20px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1976d2;
+}
+
+.next-btn,
+.prev-btn {
+    margin: 5px;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.close-btn {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+</style>
+<body>
+    <div id="submissionModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <p>Submission Successful!</p>
+            <button type="button" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+    <div class="quiz-container">
+        <h1>Know Your Dosha</h1>
+        <form id="dosha-quiz" action="/submit_dosha_quiz" method="POST">
+            <div class="question" id="question1">
+                <h3>1. How would you describe your body type?</h3>
+                <label><input type="radio" name="bodyType" value="Vata" required> Slim and light</label><br>
+                <label><input type="radio" name="bodyType" value="Pitta" required> Medium and muscular</label><br>
+                <label><input type="radio" name="bodyType" value="Kapha" required> Heavy and sturdy</label><br>
+                <button type="button" class="next-btn" onclick="nextQuestion(2)">Next</button>
+            </div>
+
+            <div class="question" id="question2" style="display: none;">
+                <h3>2. How do you respond to stress?</h3>
+                <label><input type="radio" name="stressResponse" value="Vata" > Anxious and restless</label><br>
+                <label><input type="radio" name="stressResponse" value="Pitta" > Irritated and aggressive</label><br>
+                <label><input type="radio" name="stressResponse" value="Kapha" > Calm and slow to react</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(1)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(3)">Next</button>
+            </div>
+
+            <div class="question" id="question3" style="display: none;">
+                <h3>3. What is your usual body temperature?</h3>
+                <label><input type="radio" name="bodyTemperature" value="Vata"> Cold and dry</label><br>
+                <label><input type="radio" name="bodyTemperature" value="Pitta"> Warm</label><br>
+                <label><input type="radio" name="bodyTemperature" value="Kapha"> Cool and moist</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(2)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(4)">Next</button>
+            </div>
+
+            <div class="question" id="question4" style="display: none;">
+                <h3>4. How do your cheeks usually appear?</h3>
+                <label><input type="radio" name="cheeks" value="Vata">Wrinkle/sunken</label><br>
+                <label><input type="radio" name="cheeks" value="Pitta">Smooth,Flat</label><br>
+                <label><input type="radio" name="cheeks" value="Kapha">Rounded,Plum</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(3)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(5)">Next</button>
+            </div>
+
+            <div class="question" id="question5" style="display: none;">
+                <h3>5. What best describes your face shape/chin?</h3>
+                <label><input type="radio" name="faceshape" value="Vata">Angular, thin </label><br>
+                <label><input type="radio" name="faceshape" value="Pitta">Tapering, triangular</label><br>
+                <label><input type="radio" name="faceshape" value="Kapha">Double chin, rounded</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(4)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(6)">Next</button>
+            </div>
+
+            <div class="question" id="question6" style="display: none;">
+                <h3>6. How would you describe your eyes?</h3>
+                <label><input type="radio" name="eyes" value="Vata">Black, nervous, small, sunken</label><br>
+                <label><input type="radio" name="eyes" value="Pitta">Bright, sharp, yellow/red, sensitive to light </label><br>
+                <label><input type="radio" name="eyes" value="Kapha">Beautiful, big, calm, loving </label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(5)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(7)">Next</button>
+            </div>
+
+            <div class="question" id="question7" style="display: none;">
+                <h3>7. Which of the following describes your nose shape?</h3>
+                <label><input type="radio" name="nose" value="Vata">Uneven, deviated septum</label><br>
+                <label><input type="radio" name="nose" value="Pitta">Long, pointed, red nose-tip</label><br>
+                <label><input type="radio" name="nose" value="Kapha">Short, rounded, button nose </label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(6)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(8)">Next</button>
+            </div>
+
+            <div class="question" id="question8" style="display: none;">
+                <h3>8. How would you describe your lips?</h3>
+                <label><input type="radio" name="lips" value="Vata">Dry, cracked, black/brown tinge</label><br>
+                <label><input type="radio" name="lips" value="Pitta">Red, inflamed, yellowish</label><br>
+                <label><input type="radio" name="lips" value="Kapha">Smooth, oily, cool, pale</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(7)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(9)">Next</button>
+            </div>
+
+            <div class="question" id="question9" style="display: none;">
+                <h3>9. What is the appearance of your teeth?</h3>
+                <label><input type="radio" name="teeth" value="Vata">Big, stick out, thin gums</label><br>
+                <label><input type="radio" name="teeth" value="Pitta">Soft, medium, tender gums</label><br>
+                <label><input type="radio" name="teeth" value="Kapha"> White, healthy, strong gums</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(8)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(10)">Next</button>
+            </div>
+
+            <div class="question" id="question10" style="display: none;">
+                <h3>10. How would you describe your skin?</h3>
+                <label><input type="radio" name="skin" value="Vata">Cold, rough, thin, dark</label><br>
+                <label><input type="radio" name="skin" value="Pitta">Oily, warm, smooth, rosy</label><br>
+                <label><input type="radio" name="skin" value="Kapha">Oily, cool, thick, pale</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(9)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(11)">Next</button>
+            </div>
+
+            <div class="question" id="question11" style="display: none;">
+                <h3>11. What best describes your hair?</h3>
+                <label><input type="radio" name="hair" value="Vata">Knotted, brittle, dry, brown/black</label><br>
+                <label><input type="radio" name="hair" value="Pitta">Blonde, red, bald, oily</label><br>
+                <label><input type="radio" name="hair" value="Kapha">Wavy, thick, curly, oily</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(10)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(12)">Next</button>
+            </div>
+
+            <div class="question" id="question12" style="display: none;">
+                <h3>12. How is your appetite usually?</h3>
+                <label><input type="radio" name="appetite" value="Vata">Scanty, irregular</label><br>
+                <label><input type="radio" name="appetite" value="Pitta"> Unbearable, strong</label><br>
+                <label><input type="radio" name="appetite" value="Kapha">Slow and steady</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(11)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(13)">Next</button>
+            </div>
+
+            <div class="question" id="question13" style="display: none;">
+                <h3>13. How would you describe your digestion?</h3>
+                <label><input type="radio" name="digestion" value="Vata">Forms gas, irregular</label><br>
+                <label><input type="radio" name="digestion" value="Pitta">Quick, causes burning</label><br>
+                <label><input type="radio" name="digestion" value="Kapha">Prolonged, forms mucous</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(12)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(14)">Next</button>
+            </div>
+
+            <div class="question" id="question14" style="display: none;">
+                <h3>14. How often do you feel thirsty?</h3>
+                <label><input type="radio" name="thirst" value="Vata">Changeable</label><br>
+                <label><input type="radio" name="thirst" value="Pitta">Surplus</label><br>
+                <label><input type="radio" name="thirst" value="Kapha">Sparse</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(13)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(15)">Next</button>
+            </div>
+
+            <div class="question" id="question15" style="display: none;">
+                <h3>15. Which emotions do you experience most often?</h3>
+                <label><input type="radio" name="emotions" value="Vata">Anxiety, uncertainty, fear</label><br>
+                <label><input type="radio" name="emotions" value="Pitta">Hate, anger, jealousy</label><br>
+                <label><input type="radio" name="emotions" value="Kapha">Greedy, calm, attachment</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(14)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(16)">Next</button>
+            </div>
+
+            <div class="question" id="question16" style="display: none;">
+                <h3>16. How would you describe your mind?</h3>
+                <label><input type="radio" name="mind" value="Vata">Restless</label><br>
+                <label><input type="radio" name="mind" value="Pitta">Impatient</label><br>
+                <label><input type="radio" name="mind" value="Kapha">Calm</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(15)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(17)">Next</button>
+            </div>
+
+            <div class="question" id="question17" style="display: none;">
+                <h3>17. How is your intellect?</h3>
+                <label><input type="radio" name="intellect" value="Vata">Quick with faulty responses</label><br>
+                <label><input type="radio" name="intellect" value="Pitta">Accurate response</label><br>
+                <label><input type="radio" name="intellect" value="Kapha">Exact and slow</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(16)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(18)">Next</button>
+            </div>
+
+            <div class="question" id="question18" style="display: none;">
+                <h3>18. How would you describe your speech?</h3>
+                <label><input type="radio" name="speech" value="Vata">Unclear, talkative, rapid</label><br>
+                <label><input type="radio" name="speech" value="Pitta">Sharp, penetrating, clear</label><br>
+                <label><input type="radio" name="speech" value="Kapha">Slow, quiet, monotonous </label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(17)">Previous</button>
+                <button type="button" class="next-btn" onclick="nextQuestion(19)">Next</button>
+            </div>
+
+            <div class="question" id="question19" style="display: none;">
+                <h3>19. What is the tone of your voice like?</h3>
+                <label><input type="radio" name="voice" value="Vata">Weak, hoarse </label><br>
+                <label><input type="radio" name="voice" value="Pitta">Strong tone</label><br>
+                <label><input type="radio" name="voice" value="Kapha">Deep, good tone</label><br>
+                <button type="button" class="prev-btn" onclick="previousQuestion(18)">Previous</button>
+                <button type="submit" class="next-btn" onclick="showModal(event)">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script src="../static/script.js"></script>
+</body>
+</html>

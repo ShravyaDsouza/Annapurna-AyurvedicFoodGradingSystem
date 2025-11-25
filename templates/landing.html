@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Annapurna : The Holistic Journey to Balance</title>
+    <link rel="stylesheet" href="../static/stylesheet.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<div class="header" id="header">
+    <a id="logo-link">
+        <img src="../static/images/2024.png" alt="Official Logo">
+    </a>
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ url_for('about') }}">About Us</a>
+            </li>
+            <li>
+                <a href="#features">Features</a>
+            </li>
+            <li>
+                <a href="#review">Reviews</a>
+            </li>
+             <li>
+                <a href="#blogs-view">Blogs</a>
+            </li>
+            <li>
+                <a href="#pricing">Pricing</a>
+            </li>
+        </ul>
+        <button class="button" onclick="window.location.href='{{ url_for('signin') }}'">Login</button>
+    </nav>
+</div>
+
+<section class="hero-heading">
+    <div class="contents">
+        <h1 class="heading">Welcome to Ayurvedic Food Grading System</h1>
+        <p>Discover a personalised approach to nutrition rooted in ancient wisdom</p>
+        <br><a href="#" class="get-button">Get Started</a>
+    </div>
+</section>
+
+<section class="features-list" id="features">
+    <div class="container">
+        <div class="featureswrappertwo">
+            <div class="features-left">
+                <h1>How It Works?</h1>
+                <p class="features-paragraph">The system tailors recommendations to each individual’s Dosha (Vata, Pitta, Kapha),
+                    ensuring that the food choices support their specific health needs.</p>
+                <a href="#" class="text-link-arrow w-inline block">
+                    <div>Learn more</div>
+                    <div class="arrow-embed"><img src="{{ url_for('static', filename='images/arrow.png') }}" alt="arrow" style="width: 20px; height: 20px;"></div>
+                </a>
+            </div>
+        </div>
+        <ul role="list" class="features-right">
+            <li class="features-block-two"><img src="{{ url_for('static', filename='images/assessment.png') }}" loading="lazy" alt="" class="features-image">
+                <p><strong>Assessment <br></strong>Users input their food choices or ingredients</p>
+            </li>
+            <li class="features-block-two"><img src="{{ url_for('static', filename='images/analysis.png') }}" loading="lazy" alt="" class="features-image">
+                <p><strong>Analysis <br></strong>The system grades the food based on Ayurvedic criteria such as<br>taste (Rasa), qualities (Guna), potency (Virya),
+                    <br>post-digestive effect (Vipaka), and impact on Doshas.</p>
+            </li>
+            <li class="features-block-two"><img src="{{ url_for('static', filename='images/results.png') }}" loading="lazy" alt="" class="features-image">
+                <p><strong>Results <br></strong>The user receives a grading report highlighting the food’s alignment<br>with their
+                    Ayurvedic body type and suggestions for balance.</p>
+            </li>
+        </ul>
+    </div>
+</section>
+<section class="know-your-dosha" id="blogs-view">
+    <div class="container">
+        <h3>Know Your Dosha</h3>
+        <p class="dosha-paragraph">
+            Discover the unique blueprint of your mind-body constitution
+            by taking our quick and insightful Dosha quiz. In Ayurveda,
+            your Dosha is a fundamental element that defines your physical, mental, and emotional tendencies.
+            It governs everything from how you digest food to how you respond to stress and the environment around you.
+            By understanding your Dosha—whether it’s Vata, Pitta, or Kapha—you gain valuable insights into
+            how to maintain harmony and balance in your life.
+            This knowledge can guide you in making mindful lifestyle and dietary choices tailored to your individual needs,
+            helping you achieve optimal health and well-being.
+            Take the quiz now to begin your journey toward a more balanced, energized, and fulfilling life.</p>
+        <a href="#" class="quiz-link">What's Your Dosha?</a>
+        <div class="blogs-section">
+                <h4>Explore Your Dosha</h4>
+                <div class="blogs-wrapper">
+                    {% for article in articles %}
+                    <div class="blog">
+                        <h5>{{ article.title }}</h5>
+                        <p class="blog-preview">{{ article.content[:150] }}...</p>
+                        <a href="/article/{{ article._id }}" class="blog-link">Read More</a>
+                    </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+</section>
+<section class="testimonial" id="review">
+    <div class="demo">
+        <h2>Success Stories</h2>
+        <div id="testimonial-slider" class="slick-carousel">
+            <div class="testimonial">
+                <p class="description">
+                    "Annapurna has transformed how I recommend diets to my clients. It emphasizes balance and natural ingredients, making it easier for them to make healthier choices!"
+                </p>
+                <h3 class="title">Sarah Patel</h3>
+                <span class="post">Nutritionist</span>
+            </div>
+
+            <div class="testimonial">
+                <p class="description">
+                    "As a chef, I’m always looking for quality ingredients. This grading system has helped me source the best Ayurvedic foods, and my customers can taste the difference!"
+                </p>
+                <h3 class="title">Rajiv Kumar</h3>
+                <span class="post">Chef</span>
+            </div>
+
+            <div class="testimonial">
+                <p class="description">
+                    "I love how Annapurna focuses on holistic health. It’s not just about what you eat, but how it affects your mind and body. My clients are happier and healthier!"
+                </p>
+                <h3 class="title">Anjali Mehta</h3>
+                <span class="post">Wellness Coach</span>
+            </div>
+
+            <div class="testimonial">
+                <p class="description">
+                    "Integrating Annapurna into my nutrition plans has been a game-changer. My clients are more energized and focused, and their progress speaks for itself!"
+                </p>
+                <h3 class="title">Vikram Singh</h3>
+                <span class="post">Fitness Trainer</span>
+            </div>
+
+            <div class="testimonial">
+                <p class="description">
+                    "I’ve always believed in the power of Ayurveda, and this grading system makes it so accessible. It’s helped me educate my followers on making informed food choices. Highly recommend!"
+                </p>
+                <h3 class="title">Neha Desai</h3>
+                <span class="post">Health Blogger</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="pricing-overview" id="pricing">
+    <div id="generic_price_table">
+    <div class="container">
+        <div class="price-heading clearfix">
+            <h1>Pricing Table</h1>
+        </div>
+
+        <div class="row text-center">
+            <!-- Pricing column 1 -->
+            <div class="col-md-4">
+                <div class="generic_content">
+                    <div class="generic_head_price">
+                        <div class="generic_head_content">
+                            <div class="head_bg"></div>
+                            <div class="head">
+                                <span>Basic</span>
+                            </div>
+                        </div>
+                        <div class="generic_price_tag">
+                            <span class="price">
+                                <span class="sign">$</span>
+                                <span class="currency">99</span>
+                                <span class="cent">.99</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="generic_feature_list">
+                        <ul>
+                            <li>Standard Food Grading System</li>
+                            <li>Personalized Recipe Suggestions</li>
+                            <li>Weekly Blog Updates</li>
+                            <li>Basic Support</li>
+                        </ul>
+                    </div>
+                    <div class="generic_price_btn">
+                        <a href="">Sign up</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing column 2 -->
+            <div class="col-md-4">
+                <div class="generic_content active">
+                    <div class="generic_head_price">
+                        <div class="generic_head_content">
+                            <div class="head_bg"></div>
+                            <div class="head">
+                                <span>Standard</span>
+                            </div>
+                        </div>
+                        <div class="generic_price_tag">
+                            <span class="price">
+                                <span class="sign">$</span>
+                                <span class="currency">199</span>
+                                <span class="cent">.99</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="generic_feature_list">
+                        <ul>
+                            <li>All Basic Plan Features</li>
+                            <li>Advanced Food Grading</li>
+                            <li>Customizable Recipe Plans</li>
+                            <li>Exclusive Blog Content and E-books</li>
+                            <li>Priority Support</li>
+                        </ul>
+                    </div>
+                    <div class="generic_price_btn">
+                        <a href="">Sign up</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing column 3 -->
+            <div class="col-md-4">
+                <div class="generic_content">
+                    <div class="generic_head_price">
+                        <div class="generic_head_content">
+                            <div class="head_bg"></div>
+                            <div class="head">
+                                <span>Premium</span>
+                            </div>
+                        </div>
+                        <div class="generic_price_tag">
+                            <span class="price">
+                                <span class="sign">$</span>
+                                <span class="currency">299</span>
+                                <span class="cent">.99</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="generic_feature_list">
+                        <ul>
+                            <li>All Basic Plan Features</li>
+                            <li>One-on-One Consultation</li>
+                            <li>In-Depth Grading Reports</li>
+                            <li>Personalized Meal Planning</li>
+                            <li>Premium Blog Content and Interactive Workshops</li>
+                            <li>24/7 Dedicated Support</li>
+                        </ul>
+                    </div>
+                    <div class="generic_price_btn">
+                        <a href="">Sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<footer class ="footer-subscribe">
+    <div class="container">
+        <form class="subscription">
+            <div class="title">Subscribe to Holistic Health <br><em>Ayurvedic Edition</em></div>
+            <div class="enter-mail"><input class="email" aria-label="Enter your Email" placeholder="Enter your Email" type="email" id="email" required="">
+                <input type="submit" class="button" value="Subscribe Now">
+            </div>
+        </form>
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer-block">
+            <a href="#" class="footer-link">About Us</a>
+            <a href="#" class="footer-link">Features</a>
+            <a href="#" class="footer-link">Reviews</a>
+            <a href="#" class="footer-link">Pricing</a>
+            <a href="#" class="footer-link">Blogs</a>
+        </div>
+         <div class="footer-social">
+             <a href="#"><img src="../static/images/10.png" alt=""></a>
+             <a href="#"><img src="../static/images/11.png" alt=""></a>
+             <a href="#"><img src="../static/images/12.png" alt=""></a>
+             <a href="#"><img src="../static/images/13.png" alt=""></a>
+             <a href="#"><img src="../static/images/14.png" alt=""></a>
+        </div>
+        <div class="footer-must">
+            <div class="footer-bottom">
+                <div class="footer-copyright">© 2024 Annapurna. All rights reserved</div>
+                <div class="footer-legal-block">
+                    <a href="#" class="footer-legal-link">Terms of Use</a>
+                    <a href="#" class="footer-legal-link">Terms & Conditions</a>
+                    <a href="#" class="footer-legal-link">Privacy Policy</a>
+                    <a href="#" class="footer-legal-link">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+    <script src="../static/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <script>
+        document.getElementById("logo-link").addEventListener("click", function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                 top: 0,
+                    behavior: "smooth"
+             });
+        });
+        $(document).ready(function(){
+            $('#testimonial-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                fade: true,
+                cssEase: 'linear',
+                autoplay: true,
+                autoplaySpeed: 3000,
+                arrows: true,
+                adaptiveHeight: true,
+            });
+        });
+    </script>
+</html>
+

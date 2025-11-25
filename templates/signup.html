@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annapurna : The Holistic Journey to Balance</title>
+</head>
+
+<style>
+        body {
+            background-color:#1e453e;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .video-background
+        {
+            position: fixed;
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            object-fit: cover; /* Ensures the video covers the viewport without distortion */
+            z-index: -1; /* Optional: Places the video behind other content */
+        }
+        .signup
+        {
+            height: 550px;
+            width: 850px;
+            background-color: rgba(242, 239, 235, 0.9); /* Semi-transparent background */
+            border-radius: 2.5%;
+            position: absolute;
+            margin: auto;
+            top: 150px;
+            backdrop-filter: blur(1px); /* Apply blur for glassmorphism */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Light border */
+        }
+        .signup h1{
+           color: #1e453e;
+           font-family: Arial, sans-serif;
+           font-size:45px;
+           margin-left: 60px;
+           margin-top: 50px;
+        }
+        input[type=text] ,input[type=password],input[type=email],input[type=tel],input[type=select] {
+            border: none;
+            border-bottom: none;
+            padding: 1.0em;
+            background-color:#F2EFEB;
+            flex-grow: 1;
+            outline: none;
+            font-size:12px;
+        }
+        input[type=text],input[type=password],input[type=email],input[type=tel]:focus{
+            color:#1e453e;
+        }
+        input[type="text"]:focus::placeholder {
+            color: black;
+        }
+        input[type="tel"]:focus::placeholder {
+            color: black;
+        }
+        input[type="password"]:focus::placeholder {
+            color: black;
+        }
+        input[type="email"]:focus::placeholder {
+            color: black;
+        }
+        input[type=submit]{
+            background-color:#1e453e;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 2.5%;
+            margin-right: 870px;
+            font-size: 12px;
+        }
+        select {
+            width: 87%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            appearance: none;
+            background-color: transparent;
+            color: slategray;
+        }
+        select option[disabled][selected] {
+           color: black;
+        }
+
+        select:focus option[disabled][selected] {
+            color: black; /* Color when the placeholder is selected */
+        }
+
+        .container
+        {
+            display: flex;
+            margin-left : 58px;
+            text-align: center;
+            align-items: center;
+            margin-top: -450px;
+        }
+        .name {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+        }
+        .mail {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+        }
+        .phoneno {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+        }
+        .password {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+        }
+        .rpassword {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+        }
+        .cbox {
+            display: flex;
+            margin-top : 15px;
+            margin-right: 35px;
+        }
+        .tnc p {
+            font-size: 12px; /* Set font size */
+            display: flex;
+            margin: 3px;
+        }
+        .tnc u {
+            font-size: 12px; /* Ensure the underline text matches the paragraph size */
+            display: flex;
+            margin-left: 5px;
+        }
+        .picture
+        {
+            display: flex;
+            position: relative;
+            margin-left: 300px;
+            margin-top: -190px;
+            width: 650px;
+            height: 650px;
+            z-index: 1;
+        }
+        .linktosignin u
+        {
+            position: absolute;
+            bottom : 50px;
+            margin-left: 500px;
+            display: flex;
+            cursor: pointer;
+            z-index: 100;
+        }
+        .hidden {
+            display: none;
+        }
+        .age {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+            background-color:#F2EFEB;
+        }
+        .bloodgroup {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+            background-color:#F2EFEB;
+        }
+        .gender {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+            background-color:#F2EFEB;
+        }
+        .dosha {
+            display: flex;
+            align-items: center;
+            width : 300px;
+            border-bottom: 1px solid black;
+            background-color:#F2EFEB;
+        }
+        .button-group {
+            display: inline-block;
+            margin-right : 15px;
+        }
+
+        .button-group .btn {
+            display: inline-block;
+            vertical-align: middle; /* Aligns buttons vertically */
+            margin-right: 70px; /* Space between buttons */
+        }
+
+        .button-group .btn:last-child {
+            margin-right: 0; /* Remove margin from the last button */
+        }
+
+    </style>
+    <body>
+        <div class="video-background">
+            <video autoplay muted loop class="background-video">
+                <source src="../static/videos/lotus.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="signup">
+            <h1>Sign Up</h1>
+            <div class="picture">
+                <img src="../static/images/2024.png" alt="Picture"></img>
+            </div>
+            <div class="container">
+                <form action="{{ url_for('register') }}" method="POST">
+                    <div class="first">
+                        <div class="name">
+                            <div class="logo">
+                                <img src = "../static/images/5.png" style="width:35px" ,"height:35px">
+                            </div>
+                                <input type="text" id="name" name="name" placeholder="Full Name" required>
+                                <hr style="border-top: 1px solid black;">
+                                <br><br>
+                        </div>
+                        <br>
+                        <div class="mail">
+                            <div class="logo">
+                                <img src="../static/images/2.png" style="width:35px" , "height:35px">
+                            </div>
+                                <input type="email" id="mail" name="mail" placeholder="Email" required>
+                                <hr style="border-top: 1px solid black;">
+                                <br><br>
+                        </div>
+                        <br>
+                        <div class="phoneno">
+                            <div class="logo">
+                                <img src="../static/images/6.png" style="width:35px" , "height:35px">
+                            </div>
+                                <input type="tel" id="phoneno" name="phoneno" placeholder="Phone Number" required>
+                                <hr style="border-top: 1px solid black;">
+                                <br><br>
+                        </div>
+                        <br>
+                        <div class="password">
+                            <div class="logo">
+                                <img src="../static/images/4.png" style="width:35px" , "height:35px">
+                            </div>
+                                <input type="password" id="password" name="password" placeholder="Password" required>
+                                <hr style="border-top: 1px solid black;">
+                                <br><br>
+                        </div>
+                        <br>
+                        <div class="rpassword">
+                            <div class="logo">
+                                <img src="../static/images/3.png" style="width:35px" , "height:35px">
+                            </div>
+                                <input type="password" id="rpassword" name="rpassword" placeholder="Repeat Password" required>
+                                <hr style="border-top: 1px solid black;">
+                                <br><br>
+                        </div>
+                        <div class="cbox">
+                            <input type="checkbox" required class="checkbox">
+                            <div class="tnc">
+                                <p>I agree to all the statements in <u>Terms of Service.</u></p>
+                            </div>
+                        </div>
+                        <br>
+                    <input type="submit" value="Next">
+                        <div class="linktosignin">
+                            <a href="{{ url_for('signin')}}">
+                                <u>Already registered?</u>
+                            </a>
+                        </div>
+                    </div>
+                    <div class ="hidden">
+                        <div class ="age">
+                            <div class="logo">
+                                <img src = "../static/images/5.png" style="width:35px" ,"height:35px">
+                            </div>
+                            <input type="tel" id="age" name="age" placeholder="Age" required>
+                            <hr style="border-top: 1px solid black;">
+                        </div>
+                        <br>
+                        <div class="bloodgroup">
+                            <div class="logo">
+                                <img src="../static/images/5.png" style="width:35px; height:35px;">
+                            </div>
+                                <select id="bloodgroup" name="bloodgroup" required>
+                                    <option value="" disabled selected>Select Blood Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                                <hr style="border-top: 1px solid black;">
+                        </div>
+                        <br>
+                        <div class="gender">
+                            <div class="logo">
+                                <img src="../static/images/5.png" style="width:35px; height:35px;">
+                            </div>
+                            <select id="gender" name="gender" required>
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Rather Not Say</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <hr style="border-top: 1px solid black;">
+                        </div>
+                        <br>
+                        <div class="dosha">
+                            <div class="logo">
+                                <img src = "../static/images/5.png" style="width:35px" ,"height:35px">
+                            </div>
+                                <input type="text" id="dosha" name="dosha" placeholder="Dominant Dosha" required>
+                                <hr style="border-top: 1px solid black;">
+                                <br><br>
+                        </div>
+                        <br>
+                        <div class="cbox">
+                            <input type="checkbox" required class="checkbox">
+                            <div class="tnc">
+                                <p>I agree to all the statements in <u>Terms of Service.</u></p>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="button-group">
+                            <input type="submit" value="Previous" class="btn">
+                            <input type="submit" value="Submit" class="btn">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+<script>
+    // Reference the 'Next' button and add the event listener
+    document.querySelector('input[value="Next"]').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Reference the form fields
+        const nameField = document.getElementById('name');
+        const emailField = document.getElementById('mail');
+        const phoneField = document.getElementById("phoneno");
+        const phone = phoneField.value.trim();
+        const phoneCheck = /^\d{10}$/;
+        const passwordField = document.getElementById('password');
+        const repeatPasswordField = document.getElementById('rpassword');
+        const termsCheckbox = document.querySelector('.checkbox');
+
+        // Perform validation
+        if (nameField.value === '' || emailField.value === '' || phoneField.value === '' ||
+            passwordField.value === '' || repeatPasswordField.value === '' || !phoneCheck.test(phone) ||
+            !termsCheckbox.checked) {
+            alert("Please fill in all required fields and agree to the terms.");
+            return; // Stop the function here if validation fails
+        }
+
+        // Check if passwords match
+        if (passwordField.value !== repeatPasswordField.value) {
+            alert("Passwords do not match!");
+            return; // Stop the function here if passwords don't match
+        }
+
+        // If validation passes, move to the next form
+        document.querySelector('.first').style.display = 'none'; // Hide current form
+        document.querySelector('.hidden').style.display = 'block'; // Show next form
+    });
+
+    // Event listener for 'Previous' button (to go back to the first form)
+    document.querySelector('.button-group .btn[value="Previous"]').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Hide the second form
+        document.querySelector('.hidden').style.display = 'none';
+
+        // Show the first form
+        document.querySelector('.first').style.display = 'block';
+    });
+    document.getElementById('bloodgroup').addEventListener('change', function() {
+            if (this.value) {
+                this.style.color = 'black';  // Change color when an option is selected
+            } else {
+                this.style.color = 'gray';  // Keep gray if the placeholder is selected
+            }
+        });
+
+        // Set initial color to gray for the placeholder
+        document.getElementById('gender').style.color = 'gray';
+
+        document.getElementById('gender').addEventListener('change', function() {
+            if (this.value) {
+                this.style.color = 'black';  // Change color when an option is selected
+            } else {
+                this.style.color = 'gray';  // Keep gray if the placeholder is selected
+            }
+        });
+
+        // Set initial color to gray for the placeholder
+        document.getElementById('gender').style.color = 'gray';
+</script>
